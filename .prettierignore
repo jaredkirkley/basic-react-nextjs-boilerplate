@@ -3,5 +3,5 @@ node_modules/
 coverage/
 src/lib/graphql/__generated__/
 package-lock.json
-# Helm templates use Go template syntax that confuses Prettier's YAML parser
-helm/templates/
+# Helm files — Go template syntax confuses Prettier's YAML parser
+helm/
