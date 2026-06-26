@@ -138,7 +138,7 @@ The chart includes Deployment, Service, Ingress, HPA, HorizontalPodAutoscaler, P
 
 GitHub Actions runs on every push to `main` and on all pull requests:
 
-1. `npm audit --audit-level=high` — dependency vulnerability check
+1. `npm audit --audit-level=high --omit=dev` — production dependency vulnerability check
 2. `prettier --check` — formatting
 3. `eslint` — linting
 4. `tsc --noEmit` — type checking
