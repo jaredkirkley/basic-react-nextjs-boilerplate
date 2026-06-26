@@ -1,10 +1,9 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
+import { describe, expect, it } from 'vitest';
+import { resolvers } from '../lib/graphql/resolvers';
 
 describe('GraphQL resolvers', () => {
-  it('Query.hello returns the expected greeting', async () => {
-    const { resolvers } = await import('../lib/graphql/resolvers.ts');
+  it('Query.hello returns the expected greeting', () => {
     const result = resolvers.Query.hello();
-    assert.equal(result, 'Hello from GraphQL!');
+    expect(result).toBe('Hello from GraphQL!');
   });
 });

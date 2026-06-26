@@ -1,0 +1,20 @@
+apiVersion: v2
+name: basic-react-nextjs-boilerplate
+description: Next.js 15 + TypeScript + Apollo GraphQL application
+type: application
+
+# Chart version — bump when chart templates change
+version: 0.1.0
+
+# Application version — keep in sync with the Docker image tag you deploy
+appVersion: '0.1.0'
+
+keywords:
+  - nextjs
+  - react
+  - typescript
+  - graphql
+
+maintainers:
+  - name: # your name
+    email: # your email

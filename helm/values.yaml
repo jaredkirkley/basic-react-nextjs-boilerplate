@@ -1,0 +1,151 @@
+# =============================================================================
+# values.yaml — fill in every value marked with # REQUIRED before deploying.
+# All other values have sensible defaults you can override as needed.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Image
+# -----------------------------------------------------------------------------
+image:
+  repository: '' # REQUIRED — e.g. gcr.io/my-project/basic-react-nextjs-boilerplate
+  tag: '' # REQUIRED — Docker image tag (e.g. git SHA, semver). Falls back to Chart.appVersion.
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+# - name: my-registry-secret
+
+# -----------------------------------------------------------------------------
+# Replica count & naming
+# -----------------------------------------------------------------------------
+replicaCount: 2
+
+nameOverride: ''
+fullnameOverride: ''
+
+# -----------------------------------------------------------------------------
+# Service account
+# -----------------------------------------------------------------------------
+serviceAccount:
+  create: true
+  annotations: {}
+    # cloud.google.com/service-account: my-gsa@my-project.iam.gserviceaccount.com
+  name: '' # auto-generated from chart fullname when left empty
+
+# -----------------------------------------------------------------------------
+# Pod configuration
+# -----------------------------------------------------------------------------
+podAnnotations: {}
+  # prometheus.io/scrape: "true"
+  # prometheus.io/port: "3000"
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false # Next.js writes to .next at runtime
+  capabilities:
+    drop:
+      - ALL
+
+# -----------------------------------------------------------------------------
+# Application environment variables
+# -----------------------------------------------------------------------------
+env:
+  NODE_ENV: production
+  PORT: '3000'
+  NEXT_TELEMETRY_DISABLED: '1'
+  NEXT_PUBLIC_GRAPHQL_URL: '' # REQUIRED — e.g. https://myapp.example.com/api/graphql
+
+# Secrets loaded from a Kubernetes Secret (name: value = secret key)
+# envFromSecret:
+#   MY_API_KEY: my-secret-name/api-key
+
+# -----------------------------------------------------------------------------
+# Service
+# -----------------------------------------------------------------------------
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+  annotations: {}
+
+# -----------------------------------------------------------------------------
+# Ingress
+# -----------------------------------------------------------------------------
+ingress:
+  enabled: false
+  className: '' # e.g. nginx | alb | gce
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: '' # REQUIRED when ingress.enabled — e.g. myapp.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  # - secretName: myapp-tls
+  #   hosts:
+  #     - myapp.example.com
+
+# -----------------------------------------------------------------------------
+# Resources
+# -----------------------------------------------------------------------------
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# -----------------------------------------------------------------------------
+# Autoscaling (HPA)
+# -----------------------------------------------------------------------------
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 70
+  targetMemoryUtilizationPercentage: 80
+
+# -----------------------------------------------------------------------------
+# Health probes — paths match the /api/health route handler
+# -----------------------------------------------------------------------------
+livenessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 30
+  periodSeconds: 15
+  timeoutSeconds: 5
+  failureThreshold: 3
+
+readinessProbe:
+  httpGet:
+    path: /api/health
+    port: 3000
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 3
+
+# -----------------------------------------------------------------------------
+# Scheduling
+# -----------------------------------------------------------------------------
+nodeSelector: {}
+tolerations: []
+affinity: {}
+# Example — spread pods across zones:
+# affinity:
+#   podAntiAffinity:
+#     preferredDuringSchedulingIgnoredDuringExecution:
+#       - weight: 100
+#         podAffinityTerm:
+#           labelSelector:
+#             matchLabels:
+#               app.kubernetes.io/name: basic-react-nextjs-boilerplate
+#           topologyKey: topology.kubernetes.io/zone

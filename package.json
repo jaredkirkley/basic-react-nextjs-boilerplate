@@ -10,8 +10,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx",
-    "test": "c8 tsx --tsconfig tsconfig.test.json --test src/__tests__/*.test.ts",
-    "test:coverage": "c8 --reporter=text --reporter=html tsx --tsconfig tsconfig.test.json --test src/__tests__/*.test.ts"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.11.0",
@@ -23,21 +28,30 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/client-preset": "^4.0.0",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
-    "c8": "^10.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "@vitest/coverage-v8": "^2.0.0",
     "eslint": "^8.0.0",
     "eslint-config-airbnb": "^19.0.0",
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-config-next": "^15.0.0",
+    "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-react": "^7.34.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "tsx": "^4.0.0",
-    "typescript": "^5.0.0"
+    "jsdom": "^25.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^2.0.0"
   }
 }

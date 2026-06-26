@@ -1,10 +1,8 @@
-// Apollo Server accepts a plain SDL string for typeDefs — no gql import needed.
-// eslint-disable-next-line import/prefer-default-export
-export const typeDefs = `#graphql
-  type Query {
-    """
-    Returns a greeting string. The canonical GraphQL "Hello, World!".
-    """
-    hello: String!
-  }
-`;
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+// Single source of truth: schema.graphql is also consumed by graphql-codegen.
+export const typeDefs = readFileSync(
+  path.join(process.cwd(), 'src/lib/graphql/schema.graphql'),
+  'utf-8',
+);

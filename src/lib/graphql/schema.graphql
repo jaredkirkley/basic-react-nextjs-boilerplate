@@ -1,0 +1,6 @@
+type Query {
+  """
+  Returns a greeting string. The canonical GraphQL Hello World.
+  """
+  hello: String!
+}

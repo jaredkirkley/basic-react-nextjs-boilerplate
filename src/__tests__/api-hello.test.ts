@@ -1,14 +1,12 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
+import { describe, expect, it } from 'vitest';
+import { GET } from '../app/api/hello/route';
 
 describe('GET /api/hello', () => {
-  it('returns a 200 response with a greeting', async () => {
-    // Dynamic import so tsx resolves the .ts module at test time
-    const { GET } = await import('../app/api/hello/route.ts');
+  it('returns 200 with a greeting', async () => {
     const response = GET();
-    const data = await response.json() as { message: string };
+    const data = (await response.json()) as { message: string };
 
-    assert.equal(response.status, 200);
-    assert.equal(data.message, 'Hello, World!');
+    expect(response.status).toBe(200);
+    expect(data.message).toBe('Hello, World!');
   });
 });

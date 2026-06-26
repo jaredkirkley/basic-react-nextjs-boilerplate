@@ -32,3 +32,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# graphql codegen output — committed intentionally so the repo is runnable without
+# running `npm run codegen` first. Re-run after schema/query changes.
+# src/lib/graphql/__generated__/
