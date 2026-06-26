@@ -1,0 +1,18 @@
+import { ApolloServer } from '@apollo/server';
+import { startServerAndCreateNextHandler } from '@as-integrations/next';
+import { NextRequest } from 'next/server';
+import { typeDefs } from '@/lib/graphql/schema';
+import { resolvers } from '@/lib/graphql/resolvers';
+
+const server = new ApolloServer({ typeDefs, resolvers });
+
+const handler = startServerAndCreateNextHandler<NextRequest>(server);
+
+// Explicit wrappers satisfy Next.js 15's strict RouteContext type requirements.
+export async function GET(req: NextRequest) {
+  return handler(req);
+}
+
+export async function POST(req: NextRequest) {
+  return handler(req);
+}
