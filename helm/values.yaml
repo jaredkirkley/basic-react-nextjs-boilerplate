@@ -134,6 +134,16 @@ readinessProbe:
   failureThreshold: 3
 
 # -----------------------------------------------------------------------------
+# Pod Disruption Budget
+# Prevents all pods from being evicted simultaneously during node drains or
+# rolling updates. With replicaCount: 2, minAvailable: 1 guarantees at least
+# one pod is always running.
+# -----------------------------------------------------------------------------
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1 # or e.g. "50%" for percentage-based
+
+# -----------------------------------------------------------------------------
 # Scheduling
 # -----------------------------------------------------------------------------
 nodeSelector: {}
